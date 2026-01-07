@@ -7,26 +7,23 @@
 </head>
 <body>
 
-<div class="card">
-  <h2>Edit Question</h2>
+<div class="app">
+  <div class="card">
+    <h1>Edit Question ✏️</h1>
 
-  <textarea id="question" rows="3"></textarea>
+    <textarea id="question" rows="3"></textarea>
+    <select id="type"></select>
 
-  <select id="type">
-    <option value="single">Single</option>
-    <option value="multiple">Multiple</option>
-  </select>
+    <input id="opt0">
+    <input id="opt1">
+    <input id="opt2">
+    <input id="opt3">
 
-  <input id="opt0" placeholder="Option A">
-  <input id="opt1" placeholder="Option B">
-  <input id="opt2" placeholder="Option C">
-  <input id="opt3" placeholder="Option D">
+    <input type="file" id="image">
+    <div id="answers"></div>
 
-  <input type="file" id="image">
-
-  <div id="answers"></div>
-
-  <button onclick="updateQuestion()">Update</button>
+    <button class="btn" onclick="updateQuestion()">Update</button>
+  </div>
 </div>
 
 <script src="/js/admin-edit-question.js"></script>

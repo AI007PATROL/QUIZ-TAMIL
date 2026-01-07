@@ -7,24 +7,29 @@
 </head>
 <body>
 
-<div class="card">
-  <h2>Add Question</h2>
+<div class="app">
+  <div class="card">
+    <h1>Add Question ✍️</h1>
+    <p class="subtitle">Create engaging quiz questions</p>
 
-  <textarea id="question" placeholder="Enter question" rows="3"></textarea>
+    <textarea id="question" rows="3" placeholder="Question"></textarea>
 
-  <select id="type" onchange="toggleType()">
-    <option value="single">Single Correct</option>
-    <option value="multiple">Multiple Correct</option>
-  </select>
+    <input type="file" id="image" accept="image/*">
 
-  <input type="text" id="opt0" placeholder="Option A">
-  <input type="text" id="opt1" placeholder="Option B">
-  <input type="text" id="opt2" placeholder="Option C">
-  <input type="text" id="opt3" placeholder="Option D">
+    <select id="type" onchange="toggleType()">
+      <option value="single">Single Correct</option>
+      <option value="multiple">Multiple Correct</option>
+    </select>
 
-  <div id="answers"></div>
+    <input id="opt0" placeholder="Option A">
+    <input id="opt1" placeholder="Option B">
+    <input id="opt2" placeholder="Option C">
+    <input id="opt3" placeholder="Option D">
 
-  <button onclick="addQuestion()">Save Question</button>
+    <div id="answers"></div>
+
+    <button class="btn" onclick="addQuestion()">Save Question</button>
+  </div>
 </div>
 
 <script src="/js/admin-add-question.js"></script>

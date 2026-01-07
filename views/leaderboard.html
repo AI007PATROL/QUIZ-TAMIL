@@ -2,31 +2,22 @@
 <html>
 <head>
   <title>Leaderboard</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
 
-<div class="card">
-  <h2>Quiz Completed 🎉</h2>
-  <div class="result-score" id="score"></div>
-  <button onclick="location.href='/'">Exit</button>
+<div class="app">
+  <div class="card">
+    <h1>🏆 Leaderboard</h1>
+    <p class="subtitle">Top performers</p>
+
+    <div id="board"></div>
+
+    <button class="btn secondary" onclick="location.href='/'">Exit</button>
+  </div>
 </div>
 
-<script>
-fetch("/results")
-  .then(res => res.json())
-  .then(data => {
-    const table = document.getElementById("board");
-    data.sort((a,b) => b.score - a.score);
-    data.forEach((r,i) => {
-      table.innerHTML += `
-        <tr>
-          <td>${i+1}</td>
-          <td>${r.nickname}</td>
-          <td>${r.score}</td>
-        </tr>`;
-    });
-  });
-</script>
+<script src="/js/leaderboard.js"></script>
 </body>
 </html>

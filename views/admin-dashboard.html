@@ -1,32 +1,29 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Admin Dashboard</title>
+  <title>Admin Panel</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
-<button onclick="location.href='/views/admin-add-question.html'">
-  Add Questions
-</button>
-<button onclick="location.href='/views/admin-manage-questions.html'">
-  Manage Questions
-</button>
-<div class="card">
-  <h2>Admin Dashboard</h2>
-  <p>Quiz control panel</p>
 
-  <button onclick="location.href='/views/admin-edit-users.html'">
-    Manage Users
-  </button>
+<div class="app">
+  <div class="card">
+    <h1>Admin Panel 🛠</h1>
+    <p class="subtitle">Manage quiz content</p>
 
-  <button onclick="location.href='/views/admin-analytics.html'" class="secondary">
-    View Analytics
-  </button>
+    <button class="btn" onclick="location.href='/views/admin-add-question.html'">
+      ➕ Add Question
+    </button>
 
-  <button onclick="alert('Quiz Locked')" class="secondary">
-    Start / Lock Quiz
-  </button>
+    <button class="btn secondary" onclick="location.href='/views/admin-manage-questions.html'">
+      📝 Manage Questions
+    </button>
+
+    <button class="btn secondary" onclick="location.href='/views/admin-analytics.html'">
+      📊 Analytics
+    </button>
+  </div>
 </div>
 
 </body>
