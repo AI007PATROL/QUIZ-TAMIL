@@ -151,7 +151,7 @@ app.post("/admin/add-question", upload.single("image"), (req, res) => {
   });
 
   fs.writeFileSync("./data/questions.json", JSON.stringify(questions, null, 2));
-  res.json({ message: "Question added" });
+  res.json({ message: "Question added successfully ✅" });
 });
 
 app.get("/admin/questions", (req, res) => {
