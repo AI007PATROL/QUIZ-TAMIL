@@ -2,7 +2,7 @@
 <html>
 <head>
   <title>Admin Panel</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width">
   <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
@@ -10,56 +10,60 @@
 <div class="app">
   <div class="card">
     <h1>Admin Panel 🛠</h1>
-    <p class="subtitle">Manage quiz content</p>
 
-    <button class="btn" onclick="location.href='/views/admin-add-question.html'">
-      ➕ Add Question
-    </button>
+    <select id="quizSelect"></select>
 
-    <button class="btn secondary" onclick="location.href='/views/admin-manage-questions.html'">
-      📝 Manage Questions
-    </button>
-
-    <button class="btn secondary" onclick="location.href='/views/admin-analytics.html'">
-      📊 Analytics
-    </button>
-
-    <button class="btn secondary" onclick="location.href='/views/admin-users.html'">
-      👥 Manage Users
-    </button>
-
+    <button class="btn" onclick="activateQuiz()">Activate Quiz</button>
     <button class="btn" onclick="startQuiz()">▶ Start Quiz</button>
-    <button class="btn secondary" onclick="resetQuiz()">⏹ Reset Quiz</button>
+    <button class="btn secondary" onclick="resetQuiz()">⏹ Reset</button>
 
-    <button class="btn secondary" onclick="logout()">
-      🚪 Logout
-    </button>
+    <hr>
+
+    <button class="btn secondary" onclick="location.href='/views/admin-add-question.html'">Add Question</button>
+    <button class="btn secondary" onclick="location.href='/views/admin-manage-questions.html'">Manage Questions</button>
+    <button class="btn secondary" onclick="location.href='/views/admin-analytics.html'">Analytics</button>
+    <button class="btn secondary" onclick="location.href='/views/admin-users.html'">Users</button>
+
+    <button class="btn secondary" onclick="logout()">Logout</button>
   </div>
 </div>
 
 <script>
-async function startQuiz() {
-  const res = await fetch("/admin/start-quiz", {
-    method: "POST",
-    headers: { "x-admin": "true" }
+async function loadQuizzes() {
+  const quizzes = await fetch("/api/quizzes").then(r => r.json());
+  const sel = document.getElementById("quizSelect");
+  sel.innerHTML = "";
+  quizzes.forEach(q => {
+    sel.innerHTML += `<option value="${q.id}">${q.title}</option>`;
   });
-  const data = await res.json();
-  alert(data.message);
+}
+
+async function activateQuiz() {
+  const quizId = quizSelect.value;
+  await fetch("/admin/activate-quiz", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ quizId })
+  });
+  alert("Quiz activated");
+}
+
+async function startQuiz() {
+  await fetch("/admin/start-quiz", { method: "POST" });
+  alert("Quiz started");
 }
 
 async function resetQuiz() {
-  const res = await fetch("/admin/reset-quiz", {
-    method: "POST",
-    headers: { "x-admin": "true" }
-  });
-  const data = await res.json();
-  alert(data.message);
+  await fetch("/admin/reset-quiz", { method: "POST" });
+  alert("Quiz reset");
 }
 
 function logout() {
   localStorage.clear();
-  window.location.href = "/";
+  location.href = "/";
 }
+
+loadQuizzes();
 </script>
 
 </body>

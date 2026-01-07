@@ -1,6 +1,8 @@
 {
+  "currentQuiz": null,
   "active": false,
   "started": false,
-  "title": "General Knowledge Quiz",
+  "countdown": 0,
+  "title": "",
   "joined": []
 }

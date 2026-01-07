@@ -2,7 +2,7 @@
 <html>
 <head>
   <title>User Dashboard</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width">
   <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
@@ -10,8 +10,7 @@
 <div class="app">
   <div class="card">
     <h1 id="quizTitle">Quiz</h1>
-    <p id="statusText">Waiting for admin to start…</p>
-
+    <p id="statusText">Waiting for admin…</p>
     <button class="btn" id="joinBtn" onclick="joinQuiz()">Join Quiz</button>
   </div>
 </div>
@@ -19,40 +18,31 @@
 <script>
 const username = localStorage.getItem("username");
 const nickname = localStorage.getItem("nickname");
-const joinBtn = document.getElementById("joinBtn");
 
 async function loadStatus() {
-  const res = await fetch("/api/quiz-status");
-  const data = await res.json();
+  const status = await fetch("/api/quiz-status").then(r => r.json());
 
-  document.getElementById("quizTitle").innerText = data.title;
-
-  if (data.started) {
-    window.location.href = "/views/quiz.html";
+  if (!status.currentQuiz) {
+    statusText.innerText = "No quiz active";
     return;
   }
 
-  if (data.joined?.some(u => u.username === username)) {
-    joinBtn.disabled = true;
-    joinBtn.innerText = "Joined ✔";
-    document.getElementById("statusText").innerText =
-      "Waiting for admin to start…";
+  quizTitle.innerText = status.title;
+
+  if (status.started) {
+    window.location.href = "/views/quiz.html";
   }
 }
 
 async function joinQuiz() {
-  joinBtn.disabled = true;
-  joinBtn.innerText = "Joining…";
-
   await fetch("/api/join-quiz", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ username, nickname })
   });
 
+  joinBtn.disabled = true;
   joinBtn.innerText = "Joined ✔";
-  document.getElementById("statusText").innerText =
-    "Waiting for admin to start…";
 }
 
 setInterval(loadStatus, 2000);

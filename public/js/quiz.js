@@ -1,19 +1,4 @@
 /* =========================
-   QUIZ START CHECK
-========================= */
-async function checkQuizStart() {
-  const res = await fetch("/api/quiz-status");
-  const status = await res.json();
-
-  if (!status.started) {
-    alert("Quiz has not started yet");
-    window.location.href = "/views/user-dashboard.html";
-  }
-}
-
-checkQuizStart();
-
-/* =========================
    SESSION CHECK
 ========================= */
 const username = localStorage.getItem("username");
@@ -25,38 +10,50 @@ if (!username || !nickname) {
 }
 
 /* =========================
-   ANTI-CHEAT
+   QUIZ STATUS CHECK
+========================= */
+async function checkQuizStart() {
+  const status = await fetch("/api/quiz-status").then(r => r.json());
+
+  if (!status.currentQuiz) {
+    alert("No active quiz");
+    window.location.href = "/views/user-dashboard.html";
+    return;
+  }
+
+  if (!status.started) {
+    alert("Quiz not started yet");
+    window.location.href = "/views/user-dashboard.html";
+  }
+}
+
+checkQuizStart();
+
+/* =========================
+   ANTI CHEAT
 ========================= */
 let violations = 0;
-const MAX_VIOLATIONS = 2;
 let submitted = false;
+const MAX_VIOLATIONS = 2;
 
 function addViolation(reason) {
+  if (submitted) return;
   violations++;
   document.getElementById("warning").innerText =
     `⚠ Warning ${violations}: ${reason}`;
 
   if (violations >= MAX_VIOLATIONS) {
-    alert("Too many violations. Quiz auto-submitted.");
     submitQuiz();
   }
 }
 
 document.addEventListener("visibilitychange", () => {
-  if (document.hidden && !submitted) {
-    addViolation("Tab switched or minimized");
-  }
+  if (document.hidden && !submitted)
+    addViolation("Tab switched");
 });
 
-window.addEventListener("beforeunload", e => {
-  if (!submitted && timeLeft > 0) {
-    e.preventDefault();
-    e.returnValue = "";
-  }
-});
-
-["copy", "paste", "contextmenu"].forEach(evt =>
-  document.addEventListener(evt, e => e.preventDefault())
+["copy", "paste", "contextmenu"].forEach(e =>
+  document.addEventListener(e, ev => ev.preventDefault())
 );
 
 /* =========================
@@ -65,7 +62,7 @@ window.addEventListener("beforeunload", e => {
 let questions = [];
 let current = 0;
 let answers = {};
-let timeLeft = 300; // 5 minutes
+let timeLeft = 300;
 let timer;
 
 /* =========================
@@ -85,7 +82,7 @@ async function loadQuiz() {
 }
 
 /* =========================
-   RENDER QUESTION
+   SHOW QUESTION
 ========================= */
 function showQuestion() {
   const q = questions[current];
@@ -93,28 +90,20 @@ function showQuestion() {
   document.getElementById("qno").innerText =
     `Question ${current + 1} / ${questions.length}`;
 
-  const img = q.image
-    ? `<img src="${q.image}" style="max-width:100%;border-radius:10px;margin-bottom:10px;">`
-    : "";
-
-  document.getElementById("question").innerHTML = img + q.question;
+  document.getElementById("question").innerHTML =
+    (q.image ? `<img src="${q.image}" style="max-width:100%;border-radius:10px">` : "") +
+    q.question;
 
   const optDiv = document.getElementById("options");
   optDiv.innerHTML = "";
-
   document.getElementById("nextBtn").disabled = true;
 
-  q.options.forEach((opt, idx) => {
-    const checked =
-      answers[q.id]?.includes(idx) ? "checked" : "";
-
+  q.options.forEach((opt, i) => {
     optDiv.innerHTML += `
       <label class="option">
         <input type="${q.type === "single" ? "radio" : "checkbox"}"
                name="opt"
-               value="${idx}"
-               ${checked}
-               onchange="selectAnswer(${q.id}, ${idx}, '${q.type}')">
+               onchange="selectAnswer(${q.id}, ${i}, '${q.type}')">
         ${opt}
       </label>
     `;
@@ -130,11 +119,10 @@ function showQuestion() {
 function selectAnswer(qid, idx, type) {
   if (!answers[qid]) answers[qid] = [];
 
-  if (type === "single") {
-    answers[qid] = [idx];
-  } else {
+  if (type === "single") answers[qid] = [idx];
+  else {
     answers[qid].includes(idx)
-      ? (answers[qid] = answers[qid].filter(i => i !== idx))
+      ? answers[qid] = answers[qid].filter(i => i !== idx)
       : answers[qid].push(idx);
   }
 
@@ -142,7 +130,7 @@ function selectAnswer(qid, idx, type) {
 }
 
 /* =========================
-   NEXT QUESTION
+   NAVIGATION
 ========================= */
 function nextQuestion() {
   if (current < questions.length - 1) {
@@ -156,6 +144,8 @@ function nextQuestion() {
 ========================= */
 function startTimer() {
   timer = setInterval(() => {
+    if (submitted) return;
+
     timeLeft--;
     document.getElementById("timer").innerText = timeLeft;
 
@@ -167,7 +157,7 @@ function startTimer() {
 }
 
 /* =========================
-   SUBMIT QUIZ
+   SUBMIT
 ========================= */
 async function submitQuiz() {
   if (submitted) return;
@@ -182,17 +172,13 @@ async function submitQuiz() {
       username,
       nickname,
       answers,
-      timeTaken: 300 - timeLeft,
-      violations
+      timeTaken: 300 - timeLeft
     })
   });
 
   const data = await res.json();
-  alert(`Quiz finished! Your score: ${data.score}`);
+  alert(`Quiz finished! Score: ${data.score}`);
   window.location.href = "/views/leaderboard.html";
 }
 
-/* =========================
-   START QUIZ
-========================= */
 loadQuiz();
