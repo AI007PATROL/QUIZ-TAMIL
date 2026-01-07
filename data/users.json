@@ -1,0 +1,716 @@
+[
+  {
+    "id": 1,
+    "username": "admin",
+    "password": "HARI007",
+    "role": "admin",
+    "nickname": "HARISH"
+  },
+    {
+    "id": 102,
+    "username": "SIR",
+    "password": "MAHARAJAN",
+    "role": "admin",
+    "nickname": "MAHARAJAN SIR"
+  },
+  {
+    "id": 2,
+    "username": "user001",
+    "password": "quiz123",
+    "role": "user",
+    "nickname": ""
+  },
+  {
+    "id": 3,
+    "username": "user002",
+    "password": "quiz123",
+    "role": "user",
+    "nickname": ""
+  },
+  {
+    "id": 4,
+    "username": "user003",
+    "password": "quiz123",
+    "role": "user",
+    "nickname": ""
+  },
+  {
+    "id": 5,
+    "username": "user004",
+    "password": "quiz123",
+    "role": "user",
+    "nickname": ""
+  },
+  {
+    "id": 6,
+    "username": "user005",
+    "password": "quiz123",
+    "role": "user",
+    "nickname": ""
+  },
+  {
+    "id": 7,
+    "username": "user006",
+    "password": "quiz123",
+    "role": "user",
+    "nickname": ""
+  },
+  {
+    "id": 8,
+    "username": "user007",
+    "password": "quiz123",
+    "role": "user",
+    "nickname": ""
+  },
+  {
+    "id": 9,
+    "username": "user008",
+    "password": "quiz123",
+    "role": "user",
+    "nickname": ""
+  },
+  {
+    "id": 10,
+    "username": "user009",
+    "password": "quiz123",
+    "role": "user",
+    "nickname": ""
+  },
+  {
+    "id": 11,
+    "username": "user010",
+    "password": "quiz123",
+    "role": "user",
+    "nickname": ""
+  },
+  {
+    "id": 12,
+    "username": "user011",
+    "password": "quiz123",
+    "role": "user",
+    "nickname": ""
+  },
+  {
+    "id": 13,
+    "username": "user012",
+    "password": "quiz123",
+    "role": "user",
+    "nickname": ""
+  },
+  {
+    "id": 14,
+    "username": "user013",
+    "password": "quiz123",
+    "role": "user",
+    "nickname": ""
+  },
+  {
+    "id": 15,
+    "username": "user014",
+    "password": "quiz123",
+    "role": "user",
+    "nickname": ""
+  },
+  {
+    "id": 16,
+    "username": "user015",
+    "password": "quiz123",
+    "role": "user",
+    "nickname": ""
+  },
+  {
+    "id": 17,
+    "username": "user016",
+    "password": "quiz123",
+    "role": "user",
+    "nickname": ""
+  },
+  {
+    "id": 18,
+    "username": "user017",
+    "password": "quiz123",
+    "role": "user",
+    "nickname": ""
+  },
+  {
+    "id": 19,
+    "username": "user018",
+    "password": "quiz123",
+    "role": "user",
+    "nickname": ""
+  },
+  {
+    "id": 20,
+    "username": "user019",
+    "password": "quiz123",
+    "role": "user",
+    "nickname": ""
+  },
+  {
+    "id": 21,
+    "username": "user020",
+    "password": "quiz123",
+    "role": "user",
+    "nickname": ""
+  },
+  {
+    "id": 22,
+    "username": "user021",
+    "password": "quiz123",
+    "role": "user",
+    "nickname": ""
+  },
+  {
+    "id": 23,
+    "username": "user022",
+    "password": "quiz123",
+    "role": "user",
+    "nickname": ""
+  },
+  {
+    "id": 24,
+    "username": "user023",
+    "password": "quiz123",
+    "role": "user",
+    "nickname": ""
+  },
+  {
+    "id": 25,
+    "username": "user024",
+    "password": "quiz123",
+    "role": "user",
+    "nickname": ""
+  },
+  {
+    "id": 26,
+    "username": "user025",
+    "password": "quiz123",
+    "role": "user",
+    "nickname": ""
+  },
+  {
+    "id": 27,
+    "username": "user026",
+    "password": "quiz123",
+    "role": "user",
+    "nickname": ""
+  },
+  {
+    "id": 28,
+    "username": "user027",
+    "password": "quiz123",
+    "role": "user",
+    "nickname": ""
+  },
+  {
+    "id": 29,
+    "username": "user028",
+    "password": "quiz123",
+    "role": "user",
+    "nickname": ""
+  },
+  {
+    "id": 30,
+    "username": "user029",
+    "password": "quiz123",
+    "role": "user",
+    "nickname": ""
+  },
+  {
+    "id": 31,
+    "username": "user030",
+    "password": "quiz123",
+    "role": "user",
+    "nickname": ""
+  },
+  {
+    "id": 32,
+    "username": "user031",
+    "password": "quiz123",
+    "role": "user",
+    "nickname": ""
+  },
+  {
+    "id": 33,
+    "username": "user032",
+    "password": "quiz123",
+    "role": "user",
+    "nickname": ""
+  },
+  {
+    "id": 34,
+    "username": "user033",
+    "password": "quiz123",
+    "role": "user",
+    "nickname": ""
+  },
+  {
+    "id": 35,
+    "username": "user034",
+    "password": "quiz123",
+    "role": "user",
+    "nickname": ""
+  },
+  {
+    "id": 36,
+    "username": "user035",
+    "password": "quiz123",
+    "role": "user",
+    "nickname": ""
+  },
+  {
+    "id": 37,
+    "username": "user036",
+    "password": "quiz123",
+    "role": "user",
+    "nickname": ""
+  },
+  {
+    "id": 38,
+    "username": "user037",
+    "password": "quiz123",
+    "role": "user",
+    "nickname": ""
+  },
+  {
+    "id": 39,
+    "username": "user038",
+    "password": "quiz123",
+    "role": "user",
+    "nickname": ""
+  },
+  {
+    "id": 40,
+    "username": "user039",
+    "password": "quiz123",
+    "role": "user",
+    "nickname": ""
+  },
+  {
+    "id": 41,
+    "username": "user040",
+    "password": "quiz123",
+    "role": "user",
+    "nickname": ""
+  },
+  {
+    "id": 42,
+    "username": "user041",
+    "password": "quiz123",
+    "role": "user",
+    "nickname": ""
+  },
+  {
+    "id": 43,
+    "username": "user042",
+    "password": "quiz123",
+    "role": "user",
+    "nickname": ""
+  },
+  {
+    "id": 44,
+    "username": "user043",
+    "password": "quiz123",
+    "role": "user",
+    "nickname": ""
+  },
+  {
+    "id": 45,
+    "username": "user044",
+    "password": "quiz123",
+    "role": "user",
+    "nickname": ""
+  },
+  {
+    "id": 46,
+    "username": "user045",
+    "password": "quiz123",
+    "role": "user",
+    "nickname": ""
+  },
+  {
+    "id": 47,
+    "username": "user046",
+    "password": "quiz123",
+    "role": "user",
+    "nickname": ""
+  },
+  {
+    "id": 48,
+    "username": "user047",
+    "password": "quiz123",
+    "role": "user",
+    "nickname": ""
+  },
+  {
+    "id": 49,
+    "username": "user048",
+    "password": "quiz123",
+    "role": "user",
+    "nickname": ""
+  },
+  {
+    "id": 50,
+    "username": "user049",
+    "password": "quiz123",
+    "role": "user",
+    "nickname": ""
+  },
+  {
+    "id": 51,
+    "username": "user050",
+    "password": "quiz123",
+    "role": "user",
+    "nickname": ""
+  },
+  {
+    "id": 52,
+    "username": "user051",
+    "password": "quiz123",
+    "role": "user",
+    "nickname": ""
+  },
+  {
+    "id": 53,
+    "username": "user052",
+    "password": "quiz123",
+    "role": "user",
+    "nickname": ""
+  },
+  {
+    "id": 54,
+    "username": "user053",
+    "password": "quiz123",
+    "role": "user",
+    "nickname": ""
+  },
+  {
+    "id": 55,
+    "username": "user054",
+    "password": "quiz123",
+    "role": "user",
+    "nickname": ""
+  },
+  {
+    "id": 56,
+    "username": "user055",
+    "password": "quiz123",
+    "role": "user",
+    "nickname": ""
+  },
+  {
+    "id": 57,
+    "username": "user056",
+    "password": "quiz123",
+    "role": "user",
+    "nickname": ""
+  },
+  {
+    "id": 58,
+    "username": "user057",
+    "password": "quiz123",
+    "role": "user",
+    "nickname": ""
+  },
+  {
+    "id": 59,
+    "username": "user058",
+    "password": "quiz123",
+    "role": "user",
+    "nickname": ""
+  },
+  {
+    "id": 60,
+    "username": "user059",
+    "password": "quiz123",
+    "role": "user",
+    "nickname": ""
+  },
+  {
+    "id": 61,
+    "username": "user060",
+    "password": "quiz123",
+    "role": "user",
+    "nickname": ""
+  },
+  {
+    "id": 62,
+    "username": "user061",
+    "password": "quiz123",
+    "role": "user",
+    "nickname": ""
+  },
+  {
+    "id": 63,
+    "username": "user062",
+    "password": "quiz123",
+    "role": "user",
+    "nickname": ""
+  },
+  {
+    "id": 64,
+    "username": "user063",
+    "password": "quiz123",
+    "role": "user",
+    "nickname": ""
+  },
+  {
+    "id": 65,
+    "username": "user064",
+    "password": "quiz123",
+    "role": "user",
+    "nickname": ""
+  },
+  {
+    "id": 66,
+    "username": "user065",
+    "password": "quiz123",
+    "role": "user",
+    "nickname": ""
+  },
+  {
+    "id": 67,
+    "username": "user066",
+    "password": "quiz123",
+    "role": "user",
+    "nickname": ""
+  },
+  {
+    "id": 68,
+    "username": "user067",
+    "password": "quiz123",
+    "role": "user",
+    "nickname": ""
+  },
+  {
+    "id": 69,
+    "username": "user068",
+    "password": "quiz123",
+    "role": "user",
+    "nickname": ""
+  },
+  {
+    "id": 70,
+    "username": "user069",
+    "password": "quiz123",
+    "role": "user",
+    "nickname": ""
+  },
+  {
+    "id": 71,
+    "username": "user070",
+    "password": "quiz123",
+    "role": "user",
+    "nickname": ""
+  },
+  {
+    "id": 72,
+    "username": "user071",
+    "password": "quiz123",
+    "role": "user",
+    "nickname": ""
+  },
+  {
+    "id": 73,
+    "username": "user072",
+    "password": "quiz123",
+    "role": "user",
+    "nickname": ""
+  },
+  {
+    "id": 74,
+    "username": "user073",
+    "password": "quiz123",
+    "role": "user",
+    "nickname": ""
+  },
+  {
+    "id": 75,
+    "username": "user074",
+    "password": "quiz123",
+    "role": "user",
+    "nickname": ""
+  },
+  {
+    "id": 76,
+    "username": "user075",
+    "password": "quiz123",
+    "role": "user",
+    "nickname": ""
+  },
+  {
+    "id": 77,
+    "username": "user076",
+    "password": "quiz123",
+    "role": "user",
+    "nickname": ""
+  },
+  {
+    "id": 78,
+    "username": "user077",
+    "password": "quiz123",
+    "role": "user",
+    "nickname": ""
+  },
+  {
+    "id": 79,
+    "username": "user078",
+    "password": "quiz123",
+    "role": "user",
+    "nickname": ""
+  },
+  {
+    "id": 80,
+    "username": "user079",
+    "password": "quiz123",
+    "role": "user",
+    "nickname": ""
+  },
+  {
+    "id": 81,
+    "username": "user080",
+    "password": "quiz123",
+    "role": "user",
+    "nickname": ""
+  },
+  {
+    "id": 82,
+    "username": "user081",
+    "password": "quiz123",
+    "role": "user",
+    "nickname": ""
+  },
+  {
+    "id": 83,
+    "username": "user082",
+    "password": "quiz123",
+    "role": "user",
+    "nickname": ""
+  },
+  {
+    "id": 84,
+    "username": "user083",
+    "password": "quiz123",
+    "role": "user",
+    "nickname": ""
+  },
+  {
+    "id": 85,
+    "username": "user084",
+    "password": "quiz123",
+    "role": "user",
+    "nickname": ""
+  },
+  {
+    "id": 86,
+    "username": "user085",
+    "password": "quiz123",
+    "role": "user",
+    "nickname": ""
+  },
+  {
+    "id": 87,
+    "username": "user086",
+    "password": "quiz123",
+    "role": "user",
+    "nickname": ""
+  },
+  {
+    "id": 88,
+    "username": "user087",
+    "password": "quiz123",
+    "role": "user",
+    "nickname": ""
+  },
+  {
+    "id": 89,
+    "username": "user088",
+    "password": "quiz123",
+    "role": "user",
+    "nickname": ""
+  },
+  {
+    "id": 90,
+    "username": "user089",
+    "password": "quiz123",
+    "role": "user",
+    "nickname": ""
+  },
+  {
+    "id": 91,
+    "username": "user090",
+    "password": "quiz123",
+    "role": "user",
+    "nickname": ""
+  },
+  {
+    "id": 92,
+    "username": "user091",
+    "password": "quiz123",
+    "role": "user",
+    "nickname": ""
+  },
+  {
+    "id": 93,
+    "username": "user092",
+    "password": "quiz123",
+    "role": "user",
+    "nickname": ""
+  },
+  {
+    "id": 94,
+    "username": "user093",
+    "password": "quiz123",
+    "role": "user",
+    "nickname": ""
+  },
+  {
+    "id": 95,
+    "username": "user094",
+    "password": "quiz123",
+    "role": "user",
+    "nickname": ""
+  },
+  {
+    "id": 96,
+    "username": "user095",
+    "password": "quiz123",
+    "role": "user",
+    "nickname": ""
+  },
+  {
+    "id": 97,
+    "username": "user096",
+    "password": "quiz123",
+    "role": "user",
+    "nickname": ""
+  },
+  {
+    "id": 98,
+    "username": "user097",
+    "password": "quiz123",
+    "role": "user",
+    "nickname": ""
+  },
+  {
+    "id": 99,
+    "username": "user098",
+    "password": "quiz123",
+    "role": "user",
+    "nickname": ""
+  },
+  {
+    "id": 100,
+    "username": "user099",
+    "password": "quiz123",
+    "role": "user",
+    "nickname": ""
+  },
+  {
+    "id": 101,
+    "username": "user100",
+    "password": "quiz123",
+    "role": "user",
+    "nickname": ""
+  }
+]
