@@ -1,21 +1,49 @@
+function toggleType() {
+  const type = document.getElementById("type").value;
+  const ansDiv = document.getElementById("answers");
+  ansDiv.innerHTML = "";
+
+  for (let i = 0; i < 4; i++) {
+    ansDiv.innerHTML += `
+      <label>
+        <input 
+          type="${type === "single" ? "radio" : "checkbox"}"
+          name="correct"
+          value="${i}">
+        Correct Option ${String.fromCharCode(65 + i)}
+      </label><br>
+    `;
+  }
+}
+
+// 🔥 THIS LINE IS CRITICAL
+toggleType();
+
 async function addQuestion() {
   const question = document.getElementById("question").value.trim();
   const type = document.getElementById("type").value;
 
   const options = [
-    document.getElementById("opt0").value,
-    document.getElementById("opt1").value,
-    document.getElementById("opt2").value,
-    document.getElementById("opt3").value
+    document.getElementById("opt0").value.trim(),
+    document.getElementById("opt1").value.trim(),
+    document.getElementById("opt2").value.trim(),
+    document.getElementById("opt3").value.trim()
   ];
 
+  if (!question || options.some(o => !o)) {
+    alert("Fill all fields");
+    return;
+  }
+
   const selected = document.querySelectorAll("input[name='correct']:checked");
-  if (!question || options.some(o => !o) || selected.length === 0) {
-    alert("Fill all fields & select correct answers");
+
+  if (selected.length === 0) {
+    alert("Select at least one correct answer");
     return;
   }
 
   const answer = Array.from(selected).map(i => Number(i.value));
+
   const imageFile = document.getElementById("image").files[0];
 
   const formData = new FormData();
@@ -36,4 +64,12 @@ async function addQuestion() {
 
   const data = await res.json();
   alert(data.message);
+
+  // reset
+  document.getElementById("question").value = "";
+  ["opt0","opt1","opt2","opt3"].forEach(id => {
+    document.getElementById(id).value = "";
+  });
+
+  toggleType();
 }

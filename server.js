@@ -159,31 +159,23 @@ results.push({
 app.post("/admin/add-question", upload.single("image"), (req, res) => {
   const { type, question, options, answer } = req.body;
 
-  if (!type || !question || !options || !answer) {
-    return res.status(400).json({ message: "Missing fields" });
-  }
-
-  const qPath = "./data/questions.json";
-  const questions = JSON.parse(fs.readFileSync(qPath));
-
-  const imagePath = req.file
-    ? `/uploads/${req.file.filename}`
-    : "";
+  const questions = JSON.parse(fs.readFileSync("./data/questions.json"));
 
   const newQuestion = {
     id: questions.length + 1,
-    type,                      // "single" or "multiple"
+    type,
     question,
     options: JSON.parse(options),
     answer: JSON.parse(answer),
-    image: imagePath           // empty string if no image
+    image: req.file ? `/uploads/${req.file.filename}` : ""
   };
 
   questions.push(newQuestion);
-  fs.writeFileSync(qPath, JSON.stringify(questions, null, 2));
+  fs.writeFileSync("./data/questions.json", JSON.stringify(questions, null, 2));
 
   res.json({ message: "Question added successfully ✅" });
 });
+
 /* ===== GET ALL QUESTIONS (ADMIN) ===== */
 app.get("/admin/questions", (req, res) => {
   const questions = JSON.parse(fs.readFileSync("./data/questions.json"));
