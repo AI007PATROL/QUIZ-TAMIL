@@ -1,4 +1,32 @@
-/* ===== ANTI-CHEAT ===== */
+/* =========================
+   QUIZ START CHECK
+========================= */
+async function checkQuizStart() {
+  const res = await fetch("/api/quiz-status");
+  const status = await res.json();
+
+  if (!status.started) {
+    alert("Quiz has not started yet");
+    window.location.href = "/views/user-dashboard.html";
+  }
+}
+
+checkQuizStart();
+
+/* =========================
+   SESSION CHECK
+========================= */
+const username = localStorage.getItem("username");
+const nickname = localStorage.getItem("nickname");
+
+if (!username || !nickname) {
+  alert("Session expired. Please login again.");
+  window.location.href = "/";
+}
+
+/* =========================
+   ANTI-CHEAT
+========================= */
 let violations = 0;
 const MAX_VIOLATIONS = 2;
 let submitted = false;
@@ -15,35 +43,39 @@ function addViolation(reason) {
 }
 
 document.addEventListener("visibilitychange", () => {
-  if (document.hidden) addViolation("Tab switched or minimized");
+  if (document.hidden && !submitted) {
+    addViolation("Tab switched or minimized");
+  }
 });
+
 window.addEventListener("beforeunload", e => {
-  if (!submitted) {
-    addViolation("Page refresh or close detected");
+  if (!submitted && timeLeft > 0) {
     e.preventDefault();
     e.returnValue = "";
   }
 });
+
 ["copy", "paste", "contextmenu"].forEach(evt =>
   document.addEventListener(evt, e => e.preventDefault())
 );
 
-/* ===== QUIZ STATE ===== */
+/* =========================
+   QUIZ STATE
+========================= */
 let questions = [];
 let current = 0;
 let answers = {};
-let timeLeft = 300;
+let timeLeft = 300; // 5 minutes
 let timer;
 
-const username = localStorage.getItem("username");
-const nickname = localStorage.getItem("nickname");
-
-/* ===== LOAD QUIZ ===== */
+/* =========================
+   LOAD QUIZ
+========================= */
 async function loadQuiz() {
   const res = await fetch("/api/questions");
   questions = await res.json();
 
-  if (questions.length === 0) {
+  if (!questions.length) {
     alert("No questions available");
     return;
   }
@@ -52,7 +84,9 @@ async function loadQuiz() {
   startTimer();
 }
 
-/* ===== RENDER QUESTION ===== */
+/* =========================
+   RENDER QUESTION
+========================= */
 function showQuestion() {
   const q = questions[current];
 
@@ -90,7 +124,9 @@ function showQuestion() {
     `${((current + 1) / questions.length) * 100}%`;
 }
 
-/* ===== SELECT ANSWER ===== */
+/* =========================
+   SELECT ANSWER
+========================= */
 function selectAnswer(qid, idx, type) {
   if (!answers[qid]) answers[qid] = [];
 
@@ -105,7 +141,9 @@ function selectAnswer(qid, idx, type) {
   document.getElementById("nextBtn").disabled = false;
 }
 
-/* ===== NEXT ===== */
+/* =========================
+   NEXT QUESTION
+========================= */
 function nextQuestion() {
   if (current < questions.length - 1) {
     current++;
@@ -113,7 +151,9 @@ function nextQuestion() {
   }
 }
 
-/* ===== TIMER ===== */
+/* =========================
+   TIMER
+========================= */
 function startTimer() {
   timer = setInterval(() => {
     timeLeft--;
@@ -126,7 +166,9 @@ function startTimer() {
   }, 1000);
 }
 
-/* ===== SUBMIT ===== */
+/* =========================
+   SUBMIT QUIZ
+========================= */
 async function submitQuiz() {
   if (submitted) return;
   submitted = true;
@@ -150,5 +192,7 @@ async function submitQuiz() {
   window.location.href = "/views/leaderboard.html";
 }
 
-/* ===== START ===== */
+/* =========================
+   START QUIZ
+========================= */
 loadQuiz();

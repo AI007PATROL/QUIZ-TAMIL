@@ -23,16 +23,39 @@
     <button class="btn secondary" onclick="location.href='/views/admin-analytics.html'">
       📊 Analytics
     </button>
+
     <button class="btn secondary" onclick="location.href='/views/admin-users.html'">
-   👥 Manage Users
+      👥 Manage Users
     </button>
 
+    <button class="btn" onclick="startQuiz()">▶ Start Quiz</button>
+    <button class="btn secondary" onclick="resetQuiz()">⏹ Reset Quiz</button>
+
+    <button class="btn secondary" onclick="logout()">
+      🚪 Logout
+    </button>
   </div>
 </div>
-<button class="btn secondary" onclick="logout()">
-  🚪 Logout
-</button>
+
 <script>
+async function startQuiz() {
+  const res = await fetch("/admin/start-quiz", {
+    method: "POST",
+    headers: { "x-admin": "true" }
+  });
+  const data = await res.json();
+  alert(data.message);
+}
+
+async function resetQuiz() {
+  const res = await fetch("/admin/reset-quiz", {
+    method: "POST",
+    headers: { "x-admin": "true" }
+  });
+  const data = await res.json();
+  alert(data.message);
+}
+
 function logout() {
   localStorage.clear();
   window.location.href = "/";

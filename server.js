@@ -3,7 +3,9 @@ const fs = require("fs");
 const path = require("path");
 const multer = require("multer");
 
-/* ===== SAFE JSON READER ===== */
+/* =========================
+   SAFE JSON READER
+========================= */
 function readJSON(filePath) {
   try {
     const raw = fs.readFileSync(filePath, "utf8").trim();
@@ -15,10 +17,9 @@ function readJSON(filePath) {
   }
 }
 
-const app = express();
-const PORT = process.env.PORT || 3000;
-
-/* ===== ENSURE FILES EXIST ===== */
+/* =========================
+   ENSURE FILES EXIST
+========================= */
 const ensureFile = (file, defaultData) => {
   if (!fs.existsSync(file)) {
     fs.writeFileSync(file, JSON.stringify(defaultData, null, 2));
@@ -30,17 +31,25 @@ ensureFile("./data/questions.json", []);
 ensureFile("./data/results.json", []);
 ensureFile("./data/audit-log.json", []);
 ensureFile("./data/quiz-status.json", {
-  active: true,
-  startTime: null,
-  endTime: null
+  active: false,
+  started: false,
+  title: "General Knowledge Quiz",
+  joined: []
 });
 
-/* ===== MIDDLEWARE ===== */
+/* =========================
+   APP SETUP
+========================= */
+const app = express();
+const PORT = process.env.PORT || 3000;
+
 app.use(express.json());
 app.use(express.static("public"));
 app.use("/uploads", express.static("public/uploads"));
 
-/* ===== MULTER CONFIG ===== */
+/* =========================
+   MULTER (IMAGE UPLOAD)
+========================= */
 const storage = multer.diskStorage({
   destination: "public/uploads/",
   filename: (req, file, cb) => {
@@ -49,12 +58,16 @@ const storage = multer.diskStorage({
 });
 const upload = multer({ storage });
 
-/* ===== HOME ===== */
+/* =========================
+   HOME
+========================= */
 app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "views", "login.html"));
 });
 
-/* ===== AUTH ===== */
+/* =========================
+   AUTH
+========================= */
 app.post("/api/login", (req, res) => {
   const { username, password, role } = req.body;
 
@@ -72,7 +85,9 @@ app.post("/api/login", (req, res) => {
   });
 });
 
-/* ===== SAFE VIEW ROUTER ===== */
+/* =========================
+   SAFE VIEW ROUTER
+========================= */
 app.get("/views/:page", (req, res) => {
   const allowed = [
     "login.html",
@@ -95,7 +110,9 @@ app.get("/views/:page", (req, res) => {
   res.sendFile(path.join(__dirname, "views", req.params.page));
 });
 
-/* ===== USER NICKNAME ===== */
+/* =========================
+   USER NICKNAME
+========================= */
 app.get("/api/user/:username", (req, res) => {
   const users = readJSON("./data/users.json");
   const user = users.find(u => u.username === req.params.username);
@@ -117,7 +134,9 @@ app.post("/api/set-nickname", (req, res) => {
   res.json({ nickname });
 });
 
-/* ===== ADMIN USER ===== */
+/* =========================
+   ADMIN USERS
+========================= */
 app.post("/admin/update-nickname", (req, res) => {
   const { username, nickname } = req.body;
   const users = readJSON("./data/users.json");
@@ -134,32 +153,13 @@ app.get("/admin/users", (req, res) => {
   res.json(readJSON("./data/users.json"));
 });
 
-/* ===== QUIZ ===== */
+/* =========================
+   QUIZ QUESTIONS
+========================= */
 app.get("/api/questions", (req, res) => {
   res.json(readJSON("./data/questions.json"));
 });
 
-app.post("/api/submit", (req, res) => {
-  const { username, nickname, answers, timeTaken, violations = 0 } = req.body;
-
-  const questions = readJSON("./data/questions.json");
-  let score = 0;
-
-  questions.forEach(q => {
-    if (
-      JSON.stringify((answers[q.id] || []).sort()) ===
-      JSON.stringify(q.answer.sort())
-    ) score++;
-  });
-
-  const results = readJSON("./data/results.json");
-  results.push({ username, nickname, score, time: timeTaken, violations });
-
-  fs.writeFileSync("./data/results.json", JSON.stringify(results, null, 2));
-  res.json({ score });
-});
-
-/* ===== ADMIN QUESTIONS ===== */
 app.post("/admin/add-question", upload.single("image"), (req, res) => {
   const { type, question, options, answer } = req.body;
   const questions = readJSON("./data/questions.json");
@@ -210,7 +210,29 @@ app.delete("/admin/delete-question/:id", (req, res) => {
   res.json({ message: "Deleted" });
 });
 
-/* ===== RESULTS ===== */
+/* =========================
+   QUIZ SUBMIT & RESULTS
+========================= */
+app.post("/api/submit", (req, res) => {
+  const { username, nickname, answers, timeTaken, violations = 0 } = req.body;
+
+  const questions = readJSON("./data/questions.json");
+  let score = 0;
+
+  questions.forEach(q => {
+    if (
+      JSON.stringify((answers[q.id] || []).sort()) ===
+      JSON.stringify(q.answer.sort())
+    ) score++;
+  });
+
+  const results = readJSON("./data/results.json");
+  results.push({ username, nickname, score, time: timeTaken, violations });
+
+  fs.writeFileSync("./data/results.json", JSON.stringify(results, null, 2));
+  res.json({ score });
+});
+
 app.get("/results", (req, res) => {
   res.json(readJSON("./data/results.json"));
 });
@@ -228,7 +250,54 @@ app.get("/admin/download-results", (req, res) => {
   res.send(csv);
 });
 
-/* ===== START SERVER ===== */
+/* =========================
+   LIVE QUIZ STATUS
+========================= */
+app.get("/api/quiz-status", (req, res) => {
+  res.json(readJSON("./data/quiz-status.json"));
+});
+
+app.post("/api/join-quiz", (req, res) => {
+  const { username, nickname } = req.body;
+  const status = readJSON("./data/quiz-status.json");
+
+  if (status.started) {
+    return res.status(403).json({ message: "Quiz already started" });
+  }
+
+  if (!status.joined.find(u => u.username === username)) {
+    status.joined.push({ username, nickname });
+    fs.writeFileSync("./data/quiz-status.json", JSON.stringify(status, null, 2));
+  }
+
+  res.json({ message: "Joined quiz" });
+});
+
+app.post("/admin/start-quiz", (req, res) => {
+  const status = readJSON("./data/quiz-status.json");
+  status.started = true;
+  status.active = true;
+
+  fs.writeFileSync("./data/quiz-status.json", JSON.stringify(status, null, 2));
+  res.json({ message: "Quiz started for all users" });
+});
+
+app.post("/admin/reset-quiz", (req, res) => {
+  fs.writeFileSync(
+    "./data/quiz-status.json",
+    JSON.stringify({
+      active: false,
+      started: false,
+      title: "General Knowledge Quiz",
+      joined: []
+    }, null, 2)
+  );
+  res.json({ message: "Quiz reset" });
+});
+
+/* =========================
+   START SERVER
+========================= */
 app.listen(PORT, () => {
   console.log("Server running on port " + PORT);
 });

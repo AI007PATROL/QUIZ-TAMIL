@@ -9,32 +9,54 @@
 
 <div class="app">
   <div class="card">
-    <h1 id="welcome">Welcome 👋</h1>
-    <p class="subtitle">Ready to start the quiz?</p>
+    <h1 id="quizTitle">Quiz</h1>
+    <p id="statusText">Waiting for admin to start…</p>
 
-    <button class="btn" onclick="location.href='/views/quiz.html'">
-      🚀 Start Quiz
-    </button>
-
-    <button class="btn secondary" onclick="location.href='/views/leaderboard.html'">
-      🏆 View Leaderboard
-    </button>
-
-    <button class="btn secondary" onclick="logout()">
-      🚪 Logout
-    </button>
+    <button class="btn" id="joinBtn" onclick="joinQuiz()">Join Quiz</button>
   </div>
 </div>
 
 <script>
-  const nickname = localStorage.getItem("nickname");
-  document.getElementById("welcome").innerText =
-    "Welcome, " + (nickname || "Participant");
+const username = localStorage.getItem("username");
+const nickname = localStorage.getItem("nickname");
+const joinBtn = document.getElementById("joinBtn");
 
-  function logout() {
-    localStorage.clear();
-    window.location.href = "/";
+async function loadStatus() {
+  const res = await fetch("/api/quiz-status");
+  const data = await res.json();
+
+  document.getElementById("quizTitle").innerText = data.title;
+
+  if (data.started) {
+    window.location.href = "/views/quiz.html";
+    return;
   }
+
+  if (data.joined?.some(u => u.username === username)) {
+    joinBtn.disabled = true;
+    joinBtn.innerText = "Joined ✔";
+    document.getElementById("statusText").innerText =
+      "Waiting for admin to start…";
+  }
+}
+
+async function joinQuiz() {
+  joinBtn.disabled = true;
+  joinBtn.innerText = "Joining…";
+
+  await fetch("/api/join-quiz", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ username, nickname })
+  });
+
+  joinBtn.innerText = "Joined ✔";
+  document.getElementById("statusText").innerText =
+    "Waiting for admin to start…";
+}
+
+setInterval(loadStatus, 2000);
+loadStatus();
 </script>
 
 </body>

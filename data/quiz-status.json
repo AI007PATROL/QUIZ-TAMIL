@@ -1,5 +1,6 @@
 {
-  "active": true,
-  "startTime": null,
-  "endTime": null
+  "active": false,
+  "started": false,
+  "title": "General Knowledge Quiz",
+  "joined": []
 }
