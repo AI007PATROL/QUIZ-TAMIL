@@ -14,6 +14,13 @@
     "nickname": "MAHARAJAN SIR"
   },
   {
+    "id": 103,
+    "username": "NAREN",
+    "password": "JNNK",
+    "role": "admin",
+    "nickname": "NARENKARTHIK"
+  },
+  {
     "id": 2,
     "username": "user001",
     "password": "quiz123",

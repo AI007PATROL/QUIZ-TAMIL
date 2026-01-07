@@ -1,1 +1,32 @@
-<h2>Quiz Page</h2>
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Quiz</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+<div class="card">
+
+  <div class="progress">
+    <div class="progress-bar" id="progressBar"></div>
+  </div>
+
+  <div class="timer-bar" id="timerBar"></div>
+
+  <p id="warning"></p>
+
+  <h2 id="qno"></h2>
+  <p id="question"></p>
+
+  <div class="options" id="options"></div>
+
+  <button id="nextBtn" onclick="nextQuestion()" disabled>Next</button>
+  <button class="secondary" onclick="submitQuiz()">Submit</button>
+
+</div>
+
+<script src="/js/quiz.js"></script>
+</body>
+</html>

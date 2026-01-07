@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Add Question</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+<div class="card">
+  <h2>Add Question</h2>
+
+  <textarea id="question" placeholder="Enter question" rows="3"></textarea>
+
+  <select id="type" onchange="toggleType()">
+    <option value="single">Single Correct</option>
+    <option value="multiple">Multiple Correct</option>
+  </select>
+
+  <input type="text" id="opt0" placeholder="Option A">
+  <input type="text" id="opt1" placeholder="Option B">
+  <input type="text" id="opt2" placeholder="Option C">
+  <input type="text" id="opt3" placeholder="Option D">
+
+  <div id="answers"></div>
+
+  <button onclick="addQuestion()">Save Question</button>
+</div>
+
+<script src="/js/admin-add-question.js"></script>
+</body>
+</html>

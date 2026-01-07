@@ -1,1 +1,32 @@
-<table id='board'></table>
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Leaderboard</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+<div class="card">
+  <h2>Quiz Completed 🎉</h2>
+  <div class="result-score" id="score"></div>
+  <button onclick="location.href='/'">Exit</button>
+</div>
+
+<script>
+fetch("/results")
+  .then(res => res.json())
+  .then(data => {
+    const table = document.getElementById("board");
+    data.sort((a,b) => b.score - a.score);
+    data.forEach((r,i) => {
+      table.innerHTML += `
+        <tr>
+          <td>${i+1}</td>
+          <td>${r.nickname}</td>
+          <td>${r.score}</td>
+        </tr>`;
+    });
+  });
+</script>
+</body>
+</html>

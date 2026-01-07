@@ -1,1 +1,24 @@
-<h2>Edit Users</h2>
+<h2>Edit Users</h2><div class="card">
+  <h2>Edit User Nickname</h2>
+
+  <input id="username" placeholder="Username (user001)">
+  <input id="nickname" placeholder="New nickname">
+
+  <button onclick="adminUpdate()">Update</button>
+</div>
+
+<script>
+async function adminUpdate() {
+  const username = document.getElementById("username").value;
+  const nickname = document.getElementById("nickname").value;
+
+  const res = await fetch("/admin/update-nickname", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ username, nickname })
+  });
+
+  const data = await res.json();
+  alert(data.message);
+}
+</script>

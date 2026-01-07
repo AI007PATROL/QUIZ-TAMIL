@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Edit Question</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+<div class="card">
+  <h2>Edit Question</h2>
+
+  <textarea id="question" rows="3"></textarea>
+
+  <select id="type">
+    <option value="single">Single</option>
+    <option value="multiple">Multiple</option>
+  </select>
+
+  <input id="opt0" placeholder="Option A">
+  <input id="opt1" placeholder="Option B">
+  <input id="opt2" placeholder="Option C">
+  <input id="opt3" placeholder="Option D">
+
+  <input type="file" id="image">
+
+  <div id="answers"></div>
+
+  <button onclick="updateQuestion()">Update</button>
+</div>
+
+<script src="/js/admin-edit-question.js"></script>
+</body>
+</html>

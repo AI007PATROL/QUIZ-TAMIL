@@ -1,1 +1,33 @@
-<h2>Admin Dashboard</h2>
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Admin Dashboard</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+<button onclick="location.href='/views/admin-add-question.html'">
+  Add Questions
+</button>
+<button onclick="location.href='/views/admin-manage-questions.html'">
+  Manage Questions
+</button>
+<div class="card">
+  <h2>Admin Dashboard</h2>
+  <p>Quiz control panel</p>
+
+  <button onclick="location.href='/views/admin-edit-users.html'">
+    Manage Users
+  </button>
+
+  <button onclick="location.href='/views/admin-analytics.html'" class="secondary">
+    View Analytics
+  </button>
+
+  <button onclick="alert('Quiz Locked')" class="secondary">
+    Start / Lock Quiz
+  </button>
+</div>
+
+</body>
+</html>

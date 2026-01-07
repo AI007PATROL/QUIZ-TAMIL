@@ -1,1 +1,127 @@
-body{font-family:Arial;background:#f4f6ff;}
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Inter", "Segoe UI", Arial, sans-serif;
+}
+
+body {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.card {
+  background: #ffffff;
+  width: 100%;
+  max-width: 520px;
+  padding: 26px;
+  border-radius: 14px;
+  box-shadow: 0 25px 45px rgba(0, 0, 0, 0.35);
+  animation: fadeIn 0.4s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(15px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+h2 {
+  text-align: center;
+  color: #0f2027;
+  margin-bottom: 8px;
+}
+
+p {
+  text-align: center;
+  color: #555;
+  margin-bottom: 14px;
+}
+
+button {
+  width: 100%;
+  padding: 12px;
+  margin-top: 10px;
+  border: none;
+  border-radius: 8px;
+  background: linear-gradient(135deg, #0f2027, #2c5364);
+  color: #fff;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+button.secondary {
+  background: #e5e7eb;
+  color: #111;
+}
+
+button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* ===== QUIZ ===== */
+
+.progress {
+  height: 8px;
+  background: #e5e7eb;
+  border-radius: 10px;
+  overflow: hidden;
+  margin-bottom: 10px;
+}
+
+.progress-bar {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(135deg, #16a34a, #22c55e);
+  transition: width 0.3s ease;
+}
+
+.timer-bar {
+  height: 6px;
+  background: linear-gradient(135deg, #ef4444, #f97316);
+  width: 100%;
+  margin-bottom: 12px;
+  transition: width 1s linear;
+}
+
+.options label {
+  display: block;
+  padding: 10px 14px;
+  margin-bottom: 10px;
+  border-radius: 8px;
+  border: 1px solid #d1d5db;
+  cursor: pointer;
+  transition: background 0.2s, border 0.2s;
+}
+
+.options input {
+  margin-right: 8px;
+}
+
+.options label:hover {
+  background: #f3f4f6;
+}
+
+.options input:checked + span {
+  font-weight: 600;
+}
+
+#warning {
+  text-align: center;
+  color: #dc2626;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+/* ===== RESULT ===== */
+.result-score {
+  font-size: 40px;
+  font-weight: 800;
+  color: #16a34a;
+  text-align: center;
+  margin: 10px 0;
+}

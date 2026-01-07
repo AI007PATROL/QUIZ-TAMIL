@@ -1,1 +1,33 @@
-<h2>User Dashboard</h2><script>document.write('Welcome '+localStorage.getItem('nickname'))</script>
+<!DOCTYPE html>
+<html>
+<head>
+  <title>User Dashboard</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+<div class="card">
+  <h2 id="welcome"></h2>
+  <p>Welcome to the quiz</p>
+
+  <button onclick="location.href='/views/quiz.html'">
+    Start Quiz
+  </button>
+
+  <button onclick="location.href='/views/leaderboard.html'" class="secondary">
+    View Leaderboard
+  </button>
+</div>
+<h2 id="welcome"></h2>
+<script>
+  const nick = localStorage.getItem("nickname");
+  document.getElementById("welcome").innerText =
+    "Welcome, " + (nick || "Participant");
+</script>
+<script>
+  const user = localStorage.getItem("username") || "Participant";
+  document.getElementById("welcome").innerText = "Welcome, " + user;
+</script>
+</body>
+</html>
