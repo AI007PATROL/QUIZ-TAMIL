@@ -219,7 +219,7 @@ app.post("/admin/update-question", upload.single("image"), (req, res) => {
   fs.writeFileSync(qPath, JSON.stringify(questions, null, 2));
   res.json({ message: "Question updated successfully ✅" });
 });
-
+app.use("/uploads", express.static("public/uploads"));
 /* ===== DELETE QUESTION ===== */
 app.delete("/admin/delete-question/:id", (req, res) => {
   const qPath = "./data/questions.json";
