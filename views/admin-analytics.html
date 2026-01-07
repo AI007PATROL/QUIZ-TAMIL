@@ -1,1 +1,46 @@
-<h2>Analytics</h2>
+<h2>Analytics</h2><!DOCTYPE html>
+<html>
+<head>
+  <title>Analytics</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+<div class="app">
+  <div class="card">
+    <h1>Analytics 📊</h1>
+    <p class="subtitle">Quiz performance summary</p>
+
+    <div id="stats"></div>
+
+    <button class="btn" onclick="downloadCSV()">⬇ Download Results</button>
+  </div>
+</div>
+
+<script>
+async function loadStats() {
+  const res = await fetch("/results");
+  const data = await res.json();
+
+  const stats = document.getElementById("stats");
+
+  const avg =
+    data.reduce((a, b) => a + b.score, 0) / (data.length || 1);
+
+  stats.innerHTML = `
+    <div class="option">Participants: ${data.length}</div>
+    <div class="option">Average Score: ${avg.toFixed(2)}</div>
+    <div class="option">Highest Score: ${Math.max(...data.map(d => d.score), 0)}</div>
+  `;
+}
+
+function downloadCSV() {
+  window.location.href = "/admin/download-results";
+}
+
+loadStats();
+</script>
+
+</body>
+</html>

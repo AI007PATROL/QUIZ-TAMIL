@@ -1,26 +1,16 @@
-async function saveNickname() {
-  const nickname = document.getElementById("nickname").value.trim();
-  const username = localStorage.getItem("username");
+app.post("/admin/update-nickname", (req, res) => {
+  const { username, nickname } = req.body;
 
-  if (!nickname) {
-    alert("Nickname cannot be empty");
-    return;
+  const usersPath = "./data/users.json";
+  const users = JSON.parse(fs.readFileSync(usersPath));
+
+  const user = users.find(u => u.username === username);
+  if (!user) {
+    return res.status(404).json({ message: "User not found" });
   }
 
-  const res = await fetch("/api/set-nickname", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ username, nickname })
-  });
+  user.nickname = nickname;
+  fs.writeFileSync(usersPath, JSON.stringify(users, null, 2));
 
-  const data = await res.json();
-
-  if (!res.ok) {
-    alert(data.message);
-    return;
-  }
-
-  localStorage.setItem("nickname", nickname);
-  alert("Welcome, " + nickname + " 🎉");
-  window.location.href = "/views/user-dashboard.html";
-}
+  res.json({ message: "Nickname updated successfully ✅" });
+});
