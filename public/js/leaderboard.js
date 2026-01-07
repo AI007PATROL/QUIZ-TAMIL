@@ -5,20 +5,22 @@ async function loadLeaderboard() {
   const board = document.getElementById("board");
   board.innerHTML = "";
 
+  if (data.length === 0) {
+    board.innerHTML = "<p>No results yet.</p>";
+    return;
+  }
+
+  // Sort by score desc, then time asc
   data.sort((a, b) => b.score - a.score || a.time - b.time);
 
   data.forEach((r, i) => {
     board.innerHTML += `
       <div class="option">
         <b>#${i + 1}</b>&nbsp;
-        ${r.nickname} — ${r.score} pts
+        ${r.nickname || r.username} — ${r.score} pts
       </div>
     `;
   });
 }
-app.get("/results", (req, res) => {
-  const results = JSON.parse(fs.readFileSync("./data/results.json"));
-  res.json(results);
-});
 
 loadLeaderboard();

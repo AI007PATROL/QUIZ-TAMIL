@@ -1,23 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Login</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/css/style.css">
+</head>
 <body>
-  <div class="app">
-    <div class="card">
 
-      <div class="progress">
-        <div class="progress-bar" id="progressBar"></div>
-      </div>
+<div class="app">
+  <div class="card">
+    <h1>Welcome 👋</h1>
+    <p class="subtitle">Sign in to continue</p>
 
-      <div class="timer">⏱ <span id="timer">300</span>s</div>
+    <input id="username" placeholder="User ID">
+    <input id="password" type="password" placeholder="Password">
 
-      <div class="warning" id="warning"></div>
+    <select id="role">
+      <option value="user">Participant</option>
+      <option value="admin">Admin</option>
+    </select>
 
-      <h1 id="qno">Question</h1>
-      <p id="question"></p>
-
-      <div id="options"></div>
-
-      <button class="btn" id="nextBtn" disabled onclick="nextQuestion()">Next</button>
-      <button class="btn secondary" onclick="submitQuiz()">Submit</button>
-
-    </div>
+    <button class="btn" onclick="login()">Login</button>
   </div>
+</div>
+
+<script src="/js/auth.js"></script>
 </body>
+</html>

@@ -21,8 +21,15 @@
 </div>
 
 <script>
-document.getElementById("welcome").innerText =
-  "Hello " + localStorage.getItem("nickname");
+  // Welcome message
+  document.getElementById("welcome").innerText =
+    "Hello " + (localStorage.getItem("nickname") || "");
+
+  // Logout function
+  function logout() {
+    localStorage.clear();
+    window.location.href = "/";
+  }
 </script>
 
 </body>

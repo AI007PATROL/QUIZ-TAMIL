@@ -11,15 +11,24 @@
   <div class="card">
     <h1>Edit Question ✏️</h1>
 
-    <textarea id="question" rows="3"></textarea>
-    <select id="type"></select>
+    <textarea id="question" rows="3" placeholder="Question"></textarea>
 
-    <input id="opt0">
-    <input id="opt1">
-    <input id="opt2">
-    <input id="opt3">
+    <!-- ✅ Question type -->
+    <select id="type">
+      <option value="single">Single Correct</option>
+      <option value="multiple">Multiple Correct</option>
+    </select>
 
-    <input type="file" id="image">
+    <input id="opt0" placeholder="Option A">
+    <input id="opt1" placeholder="Option B">
+    <input id="opt2" placeholder="Option C">
+    <input id="opt3" placeholder="Option D">
+
+    <!-- ✅ Current / new image preview -->
+    <input type="file" id="image" accept="image/*">
+    <img id="preview" style="display:none;max-width:100%;border-radius:12px;margin:10px 0;">
+
+    <!-- ✅ Answer selection -->
     <div id="answers"></div>
 
     <button class="btn" onclick="updateQuestion()">Update</button>

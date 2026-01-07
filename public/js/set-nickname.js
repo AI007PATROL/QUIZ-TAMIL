@@ -1,16 +1,38 @@
-app.post("/admin/update-nickname", (req, res) => {
-  const { username, nickname } = req.body;
+async function saveNickname() {
+  const nicknameInput = document.getElementById("nickname");
+  const nickname = nicknameInput.value.trim();
+  const username = localStorage.getItem("username");
 
-  const usersPath = "./data/users.json";
-  const users = JSON.parse(fs.readFileSync(usersPath));
-
-  const user = users.find(u => u.username === username);
-  if (!user) {
-    return res.status(404).json({ message: "User not found" });
+  if (!username) {
+    alert("Session expired. Please login again.");
+    window.location.href = "/";
+    return;
   }
 
-  user.nickname = nickname;
-  fs.writeFileSync(usersPath, JSON.stringify(users, null, 2));
+  if (!nickname) {
+    alert("Please enter a nickname");
+    return;
+  }
 
-  res.json({ message: "Nickname updated successfully ✅" });
-});
+  try {
+    const res = await fetch("/api/set-nickname", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ username, nickname })
+    });
+
+    const data = await res.json();
+
+    if (!res.ok) {
+      alert(data.message);
+      return;
+    }
+
+    localStorage.setItem("nickname", data.nickname);
+    window.location.href = "/views/user-dashboard.html";
+
+  } catch (err) {
+    alert("Server error. Try again.");
+    console.error(err);
+  }
+}

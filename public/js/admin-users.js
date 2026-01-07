@@ -1,9 +1,15 @@
-// admin logicasync function loadUsers() {
+// admin logic
+async function loadUsers() {
   const res = await fetch("/admin/users");
   const users = await res.json();
 
   const container = document.getElementById("userList");
   container.innerHTML = "";
+
+  if (users.length === 0) {
+    container.innerHTML = "<p>No users found.</p>";
+    return;
+  }
 
   users.forEach(u => {
     container.innerHTML += `
@@ -13,7 +19,7 @@
           <small>Nickname: ${u.nickname || "Not set"}</small>
         </div>
         <button class="btn secondary" onclick="editNickname('${u.username}')">
-          Edit
+          ✏️ Edit
         </button>
       </div>
     `;
@@ -21,8 +27,14 @@
 }
 
 async function editNickname(username) {
-  const newNick = prompt("Enter new nickname");
+  let newNick = prompt("Enter new nickname");
   if (!newNick) return;
+
+  newNick = newNick.trim();
+  if (!newNick) {
+    alert("Nickname cannot be empty");
+    return;
+  }
 
   const res = await fetch("/admin/update-nickname", {
     method: "POST",

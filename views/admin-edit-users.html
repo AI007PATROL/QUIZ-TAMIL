@@ -1,16 +1,32 @@
-<h2>Edit Users</h2><div class="card">
-  <h2>Edit User Nickname</h2>
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Edit Users</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
 
-  <input id="username" placeholder="Username (user001)">
-  <input id="nickname" placeholder="New nickname">
+<div class="app">
+  <div class="card">
+    <h1>Edit User Nickname</h1>
 
-  <button onclick="adminUpdate()">Update</button>
+    <input id="username" placeholder="Username">
+    <input id="nickname" placeholder="New nickname">
+
+    <button class="btn" onclick="adminUpdate()">Update</button>
+  </div>
 </div>
 
 <script>
 async function adminUpdate() {
-  const username = document.getElementById("username").value;
-  const nickname = document.getElementById("nickname").value;
+  const username = document.getElementById("username").value.trim();
+  const nickname = document.getElementById("nickname").value.trim();
+
+  if (!username || !nickname) {
+    alert("Both fields required");
+    return;
+  }
 
   const res = await fetch("/admin/update-nickname", {
     method: "POST",
@@ -22,3 +38,5 @@ async function adminUpdate() {
   alert(data.message);
 }
 </script>
+</body>
+</html>

@@ -7,27 +7,35 @@
 </head>
 <body>
 
-<div class="card">
-  <h2 id="welcome"></h2>
-  <p>Welcome to the quiz</p>
+<div class="app">
+  <div class="card">
+    <h1 id="welcome">Welcome 👋</h1>
+    <p class="subtitle">Ready to start the quiz?</p>
 
-  <button onclick="location.href='/views/quiz.html'">
-    Start Quiz
-  </button>
+    <button class="btn" onclick="location.href='/views/quiz.html'">
+      🚀 Start Quiz
+    </button>
 
-  <button onclick="location.href='/views/leaderboard.html'" class="secondary">
-    View Leaderboard
-  </button>
+    <button class="btn secondary" onclick="location.href='/views/leaderboard.html'">
+      🏆 View Leaderboard
+    </button>
+
+    <button class="btn secondary" onclick="logout()">
+      🚪 Logout
+    </button>
+  </div>
 </div>
-<h2 id="welcome"></h2>
+
 <script>
-  const nick = localStorage.getItem("nickname");
+  const nickname = localStorage.getItem("nickname");
   document.getElementById("welcome").innerText =
-    "Welcome, " + (nick || "Participant");
+    "Welcome, " + (nickname || "Participant");
+
+  function logout() {
+    localStorage.clear();
+    window.location.href = "/";
+  }
 </script>
-<script>
-  const user = localStorage.getItem("username") || "Participant";
-  document.getElementById("welcome").innerText = "Welcome, " + user;
-</script>
+
 </body>
 </html>

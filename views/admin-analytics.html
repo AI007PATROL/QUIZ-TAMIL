@@ -1,4 +1,4 @@
-<h2>Analytics</h2><!DOCTYPE html>
+<!DOCTYPE html>
 <html>
 <head>
   <title>Analytics</title>
@@ -25,13 +25,18 @@ async function loadStats() {
 
   const stats = document.getElementById("stats");
 
+  if (data.length === 0) {
+    stats.innerHTML = "<p>No results available yet.</p>";
+    return;
+  }
+
   const avg =
-    data.reduce((a, b) => a + b.score, 0) / (data.length || 1);
+    data.reduce((a, b) => a + b.score, 0) / data.length;
 
   stats.innerHTML = `
     <div class="option">Participants: ${data.length}</div>
     <div class="option">Average Score: ${avg.toFixed(2)}</div>
-    <div class="option">Highest Score: ${Math.max(...data.map(d => d.score), 0)}</div>
+    <div class="option">Highest Score: ${Math.max(...data.map(d => d.score))}</div>
   `;
 }
 

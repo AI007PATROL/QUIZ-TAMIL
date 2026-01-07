@@ -5,6 +5,14 @@ const multer = require("multer");
 
 const app = express();
 const PORT = process.env.PORT || 3000;
+const ensureFile = (file, defaultData) => {
+  if (!fs.existsSync(file)) {
+    fs.writeFileSync(file, JSON.stringify(defaultData, null, 2));
+  }
+};
+ensureFile("./data/users.json", []);
+ensureFile("./data/questions.json", []);
+ensureFile("./data/results.json", []);
 
 /* ===== MIDDLEWARE ===== */
 app.use(express.json());
@@ -43,11 +51,27 @@ app.post("/api/login", (req, res) => {
   });
 });
 
-/* ===== VIEW ROUTER ===== */
+// ===== SAFE VIEW ROUTER =====
 app.get("/views/:page", (req, res) => {
+  const allowed = [
+    "login.html",
+    "quiz.html",
+    "leaderboard.html",
+    "set-nickname.html",
+    "user-dashboard.html",
+    "admin-dashboard.html",
+    "admin-add-question.html",
+    "admin-edit-question.html",
+    "admin-manage-questions.html",
+    "admin-analytics.html",
+    "admin-users.html"
+  ];
+
+  if (!allowed.includes(req.params.page)) {
+    return res.status(403).send("Access denied");
+  }
   res.sendFile(path.join(__dirname, "views", req.params.page));
 });
-
 /* ===== NICKNAME ===== */
 app.get("/api/user/:username", (req, res) => {
   const users = JSON.parse(fs.readFileSync("./data/users.json"));

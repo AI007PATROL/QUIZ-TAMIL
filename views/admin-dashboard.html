@@ -23,8 +23,21 @@
     <button class="btn secondary" onclick="location.href='/views/admin-analytics.html'">
       📊 Analytics
     </button>
+    <button class="btn secondary" onclick="location.href='/views/admin-users.html'">
+   👥 Manage Users
+    </button>
+
   </div>
 </div>
+<button class="btn secondary" onclick="logout()">
+  🚪 Logout
+</button>
+<script>
+function logout() {
+  localStorage.clear();
+  window.location.href = "/";
+}
+</script>
 
 </body>
 </html>
