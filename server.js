@@ -4,21 +4,51 @@ const path = require("path");
 const multer = require("multer");
 
 /* =========================
-   SAFE JSON
+   HELPERS
 ========================= */
-function readJSON(file, fallback = []) {
+const readJSON = (file, fallback = []) => {
   try {
+    if (!fs.existsSync(file)) return fallback;
     const raw = fs.readFileSync(file, "utf8").trim();
     return raw ? JSON.parse(raw) : fallback;
-  } catch {
+  } catch (err) {
+    console.error("JSON ERROR:", file);
     return fallback;
   }
-}
+};
 
-function writeJSON(file, data) {
+const writeJSON = (file, data) => {
   fs.writeFileSync(file, JSON.stringify(data, null, 2));
-}
+};
 
+const ensureDir = dir => {
+  if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
+};
+
+const ensureFile = (file, data) => {
+  if (!fs.existsSync(file)) writeJSON(file, data);
+};
+
+/* =========================
+   INIT STORAGE
+========================= */
+ensureDir("./data");
+ensureDir("./data/questions");
+ensureDir("./data/results");
+
+ensureFile("./data/users.json", []);
+ensureFile("./data/quizzes.json", []);
+ensureFile("./data/quiz-status.json", {
+  currentQuiz: null,
+  active: false,
+  started: false,
+  title: "",
+  joined: []
+});
+
+/* =========================
+   APP SETUP
+========================= */
 const app = express();
 const PORT = process.env.PORT || 3000;
 
@@ -41,6 +71,29 @@ const upload = multer({ storage });
 ========================= */
 app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "views/login.html"));
+});
+
+/* =========================
+   SAFE VIEW ROUTER
+========================= */
+app.get("/views/:page", (req, res) => {
+  const allowed = [
+    "login.html",
+    "user-dashboard.html",
+    "quiz.html",
+    "leaderboard.html",
+    "set-nickname.html",
+    "admin-dashboard.html",
+    "admin-add-question.html",
+    "admin-manage-questions.html",
+    "admin-analytics.html",
+    "admin-users.html"
+  ];
+
+  if (!allowed.includes(req.params.page))
+    return res.status(403).send("Access denied");
+
+  res.sendFile(path.join(__dirname, "views", req.params.page));
 });
 
 /* =========================
@@ -96,7 +149,6 @@ app.post("/admin/activate-quiz", (req, res) => {
     currentQuiz: quizId,
     active: true,
     started: false,
-    countdown: 0,
     title: quizzes.find(q => q.id === quizId)?.title || "",
     joined: []
   });
@@ -116,14 +168,14 @@ app.post("/api/join-quiz", (req, res) => {
   const status = readJSON("./data/quiz-status.json");
 
   if (status.started)
-    return res.status(403).json({ message: "Quiz started" });
+    return res.status(403).json({ message: "Quiz already started" });
 
   if (!status.joined.some(u => u.username === username)) {
     status.joined.push({ username, nickname });
     writeJSON("./data/quiz-status.json", status);
   }
 
-  res.json({ message: "Joined" });
+  res.json({ message: "Joined quiz" });
 });
 
 app.post("/admin/start-quiz", (req, res) => {
@@ -138,7 +190,6 @@ app.post("/admin/reset-quiz", (req, res) => {
     currentQuiz: null,
     active: false,
     started: false,
-    countdown: 0,
     title: "",
     joined: []
   });
@@ -150,23 +201,28 @@ app.post("/admin/reset-quiz", (req, res) => {
 ========================= */
 app.get("/api/questions", (req, res) => {
   const status = readJSON("./data/quiz-status.json");
+  if (!status.currentQuiz) return res.json([]);
   res.json(readJSON(`./data/questions/${status.currentQuiz}.json`));
 });
 
 app.post("/admin/add-question", upload.single("image"), (req, res) => {
   const status = readJSON("./data/quiz-status.json");
+  if (!status.currentQuiz)
+    return res.status(400).json({ message: "No active quiz" });
+
   const questions = readJSON(`./data/questions/${status.currentQuiz}.json`);
 
   questions.push({
     id: questions.length + 1,
-    ...req.body,
+    type: req.body.type,
+    question: req.body.question,
     options: JSON.parse(req.body.options || "[]"),
     answer: JSON.parse(req.body.answer || "[]"),
     image: req.file ? `/uploads/${req.file.filename}` : ""
   });
 
   writeJSON(`./data/questions/${status.currentQuiz}.json`, questions);
-  res.json({ message: "Question added" });
+  res.json({ message: "Question added successfully ✅" });
 });
 
 /* =========================
@@ -176,9 +232,14 @@ app.post("/api/submit", (req, res) => {
   const { username, nickname, answers, timeTaken } = req.body;
   const status = readJSON("./data/quiz-status.json");
 
-  const questions = readJSON(`./data/questions/${status.currentQuiz}.json`);
-  let correct = 0;
+  if (!status.currentQuiz)
+    return res.status(400).json({ message: "No active quiz" });
 
+  const questions = readJSON(
+    `./data/questions/${status.currentQuiz}.json`
+  );
+
+  let correct = 0;
   questions.forEach(q => {
     if (
       JSON.stringify((answers[q.id] || []).sort()) ===
@@ -212,12 +273,13 @@ app.post("/api/submit", (req, res) => {
 });
 
 /* =========================
-   ANALYTICS (ADMIN)
+   ANALYTICS
 ========================= */
 app.get("/admin/analytics/:quizId", (req, res) => {
   const results = readJSON(`./data/results/${req.params.quizId}.json`);
 
-  if (!results.length) return res.json({ participants: 0 });
+  if (!results.length)
+    return res.json({ participants: 0 });
 
   res.json({
     participants: results.length,
@@ -233,7 +295,7 @@ app.get("/admin/analytics/:quizId", (req, res) => {
 });
 
 /* =========================
-   START
+   START SERVER
 ========================= */
 app.listen(PORT, () =>
   console.log("Server running on port " + PORT)
