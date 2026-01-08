@@ -13,18 +13,28 @@
 
     <select id="quizSelect"></select>
 
-    <button class="btn" onclick="activateQuiz()">Activate Quiz</button>
-    <button class="btn" onclick="startQuiz()">▶ Start Quiz</button>
-    <button class="btn secondary" onclick="resetQuiz()">⏹ Reset</button>
+   <button class="btn" onclick="startQuiz()">▶ Start Quiz</button>
+<button class="btn secondary" onclick="stopQuiz()">⏹ Stop Quiz</button>
+<button class="btn danger" onclick="deactivateQuiz()">❌ Deactivate Quiz</button>
 
-    <hr>
+<script>
+async function startQuiz() {
+  const r = await fetch("/admin/start-quiz", { method: "POST" });
+  alert((await r.json()).message);
+}
 
-    <button class="btn secondary" onclick="location.href='/views/admin-add-question.html'">Add Question</button>
-    <button class="btn secondary" onclick="location.href='/views/admin-manage-questions.html'">Manage Questions</button>
-    <button class="btn secondary" onclick="location.href='/views/admin-analytics.html'">Analytics</button>
-    <button class="btn secondary" onclick="location.href='/views/admin-users.html'">Users</button>
+async function stopQuiz() {
+  const r = await fetch("/admin/stop-quiz", { method: "POST" });
+  alert((await r.json()).message);
+}
 
-    <button class="btn secondary" onclick="logout()">Logout</button>
+async function deactivateQuiz() {
+  if (!confirm("Deactivate quiz?")) return;
+  const r = await fetch("/admin/deactivate-quiz", { method: "POST" });
+  alert((await r.json()).message);
+}
+</script>
+
   </div>
 </div>
 

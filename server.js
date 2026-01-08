@@ -195,6 +195,20 @@ app.post("/admin/reset-quiz", (req, res) => {
   });
   res.json({ message: "Quiz reset" });
 });
+app.post("/admin/start-quiz", (req, res) => {
+  const status = readJSON("./data/quiz-status.json");
+
+  if (!status.currentQuiz) {
+    return res.status(400).json({ message: "No quiz activated" });
+  }
+
+  status.started = true;
+  status.ended = false;
+
+  writeJSON("./data/quiz-status.json", status);
+
+  res.json({ message: "Quiz started" });
+});
 
 /* =========================
    QUESTIONS
@@ -320,6 +334,33 @@ app.post("/api/set-nickname", (req, res) => {
 
   res.json({ message: "Nickname saved" });
 });
+app.post("/admin/stop-quiz", (req, res) => {
+  const status = readJSON("./data/quiz-status.json");
+
+  if (!status.started) {
+    return res.status(400).json({ message: "Quiz not running" });
+  }
+
+  status.started = false;
+  status.ended = true;
+
+  writeJSON("./data/quiz-status.json", status);
+
+  res.json({ message: "Quiz stopped for all users" });
+});
+app.post("/admin/deactivate-quiz", (req, res) => {
+  writeJSON("./data/quiz-status.json", {
+    currentQuiz: null,
+    active: false,
+    started: false,
+    ended: false,
+    title: "",
+    joined: []
+  });
+
+  res.json({ message: "Quiz deactivated" });
+});
+
 /* =========================
    DOWNLOAD RESULTS (PER QUIZ)
 ========================= */

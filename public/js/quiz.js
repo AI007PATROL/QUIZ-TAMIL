@@ -12,20 +12,23 @@ if (!username || !nickname) {
 /* =========================
    QUIZ STATUS CHECK
 ========================= */
-async function checkQuizStart() {
-  const status = await fetch("/api/quiz-status").then(r => r.json());
+async function checkQuizStatus() {
+  const res = await fetch("/api/quiz-status");
+  const status = await res.json();
 
-  if (!status.currentQuiz) {
-    alert("No active quiz");
-    window.location.href = "/views/user-dashboard.html";
-    return;
+  if (status.ended) {
+    alert("Quiz has ended");
+    submitQuiz();
   }
 
   if (!status.started) {
-    alert("Quiz not started yet");
+    alert("Quiz not started");
     window.location.href = "/views/user-dashboard.html";
   }
 }
+
+setInterval(checkQuizStatus, 3000);
+
 
 checkQuizStart();
 

@@ -2,7 +2,7 @@
   "currentQuiz": null,
   "active": false,
   "started": false,
-  "countdown": 0,
+  "ended": false,
   "title": "",
   "joined": []
 }
