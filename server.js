@@ -293,6 +293,33 @@ app.get("/admin/analytics/:quizId", (req, res) => {
     fastestTime: Math.min(...results.map(r => r.time))
   });
 });
+/* =========================
+   SET NICKNAME (FIX)
+========================= */
+app.post("/api/set-nickname", (req, res) => {
+  const { username, nickname } = req.body;
+
+  if (!username || !nickname) {
+    return res.status(400).json({ message: "Missing data" });
+  }
+
+  const users = readJSON("./data/users.json");
+
+  const user = users.find(u => u.username === username);
+  if (!user) {
+    return res.status(404).json({ message: "User not found" });
+  }
+
+  // allow nickname only once (optional)
+  if (user.nickname) {
+    return res.status(403).json({ message: "Nickname already set" });
+  }
+
+  user.nickname = nickname;
+  writeJSON("./data/users.json", users);
+
+  res.json({ message: "Nickname saved" });
+});
 
 /* =========================
    START SERVER
