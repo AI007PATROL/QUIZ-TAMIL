@@ -41,7 +41,8 @@ async function loadStats() {
 }
 
 function downloadCSV() {
-  window.location.href = "/admin/download-results";
+  window.location.href = `/admin/download-results/${quizId}`;
+
 }
 
 loadStats();

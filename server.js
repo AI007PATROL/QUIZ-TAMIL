@@ -320,6 +320,28 @@ app.post("/api/set-nickname", (req, res) => {
 
   res.json({ message: "Nickname saved" });
 });
+/* =========================
+   DOWNLOAD RESULTS (PER QUIZ)
+========================= */
+app.get("/admin/download-results/:quizId", (req, res) => {
+  const quizId = req.params.quizId;
+  const resultsPath = `./data/results/${quizId}.json`;
+
+  if (!fs.existsSync(resultsPath)) {
+    return res.status(404).send("Results not found");
+  }
+
+  const results = readJSON(resultsPath);
+
+  let csv = "Username,Nickname,Correct,Total,Accuracy,Time,Score\n";
+  results.forEach(r => {
+    csv += `${r.username},${r.nickname},${r.correct},${r.total},${r.accuracy},${r.time},${r.score}\n`;
+  });
+
+  res.header("Content-Type", "text/csv");
+  res.attachment(`${quizId}-results.csv`);
+  res.send(csv);
+});
 
 /* =========================
    START SERVER
