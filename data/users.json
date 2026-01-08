@@ -8,10 +8,17 @@
   },
     {
     "id": 102,
-    "username": "SIR",
-    "password": "MAHARAJAN",
+    "username": "MAHARAJAN",
+    "password": "MAHARAJAN SIR",
     "role": "admin",
     "nickname": "MAHARAJAN SIR"
+  },
+   {
+    "id": 104,
+    "username": "MANIKANDAN",
+    "password": "MANICSE",
+    "role": "admin",
+    "nickname": "MANIKANDAN"
   },
   {
     "id": 103,
