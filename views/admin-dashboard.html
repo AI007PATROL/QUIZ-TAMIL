@@ -16,6 +16,18 @@
    <button class="btn" onclick="startQuiz()">▶ Start Quiz</button>
 <button class="btn secondary" onclick="stopQuiz()">⏹ Stop Quiz</button>
 <button class="btn danger" onclick="deactivateQuiz()">❌ Deactivate Quiz</button>
+<button onclick="location.href='/views/admin-add-question.html?role=admin'">
+➕ Add Question
+</button>
+<button onclick="location.href='/views/admin-manage-questions.html?role=admin'">
+📝 Manage Questions
+</button>
+<button onclick="location.href='/views/admin-analytics.html?role=admin'">
+📊 Analytics
+</button>
+<button onclick="location.href='/views/admin-users.html?role=admin'">
+👥 Manage Users
+</button>
 
 <script>
 async function startQuiz() {
